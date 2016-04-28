@@ -1,8 +1,8 @@
 //v funkcijo vstavimo parameter:     $http
-angular.module('app').factory('loginService',function($http, NET) {
+angular.module('app').factory('authService',function($http, NET) {
 
 	//tukaj pisemo metode, kaj bo login-service delal
-    var loginService = {
+    var authService = {
 
         login:function (userData) {
 
@@ -17,5 +17,5 @@ angular.module('app').factory('loginService',function($http, NET) {
         }
     };
 
-	return loginService;
+	return authService;
 });
