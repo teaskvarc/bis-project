@@ -1,0 +1,17 @@
+{
+  "name": "bis-api",
+  "version": "1.0.0",
+  "description": "Bis api",
+  "main": "run.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tea",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.3.0",
+    "bluebird": "^3.3.5",
+    "express": "^4.13.4",
+    "mongoose": "^4.4.13"
+  }
+}
