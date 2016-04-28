@@ -14,12 +14,17 @@ exports.init = function () {
                 reject(err);
             }else{
                 console.log('Server running on port 3050');
-                resolve();
+                resolve(server);
             }
 
         });
     });
-}
+};
+
+exports.getServer = function () {
+
+    return server;
+};
 
 
 

@@ -5,6 +5,7 @@
 
 var server      = require('./server');
 var database    = require('./database');
+var resources   = require('./resources');
 
 function init() {
 
@@ -12,7 +13,8 @@ function init() {
         .then(database.init)
         .then(function () {
 
-            console.log('All is well');
+            resources.init(server.getServer());
+
         });
 }
 
