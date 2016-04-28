@@ -137,4 +137,34 @@ module.exports = function(server){
         });
 
     });
-};
+
+    //INVITE
+    server.post('/api/account/invite', function (req, res) {
+
+        req.checkBody('email', 'Email is not valid').isEmail();
+        req.checkBody('role', 'No role present').notEmpty();
+
+        //no nam vrne ven, ce je odkril, da je problem pri enem od parametrov
+        var errors = req.validationErrors();
+
+        if(errors){
+            return res.status(400).send(errors);
+        }
+
+        var accountData = req.body;
+        //na server-ju bomo dolocili, da je bil povabljen. v model.js smo dolocili, da je 0 = povabljen
+        accountData.status = 0;
+
+        var Account = mongoose.model('Account');    //skozi ta Account delamo novi account na bazi
+
+        var account = new Account(accountData);        // ustvarimo novi model
+
+        account.save(function (err) {                      // shranimo v bazo
+
+
+        });
+
+
+    });
+
+}

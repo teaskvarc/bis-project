@@ -17,6 +17,11 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
         templateUrl: 'partial/user-management/user-management.html',
         controller: 'UserManagementCtrl'
     });
+    $stateProvider.state('new-account', {
+        url: '/new-account',
+        templateUrl: 'partial/new-account/new-account.html',
+        controller: 'NewAccountCtrl'
+    });
     /* Add New States Above */
     $urlRouterProvider.otherwise('/login');
 
