@@ -1,5 +1,6 @@
-var mongoose = require('mongoose');
-var bcrypt = require('bcryptjs');
+var mongoose    = require('mongoose');
+var bcrypt      = require('bcryptjs');
+var guid        = require ('guid');
 
 
 module.exports = function(server){
@@ -19,7 +20,67 @@ module.exports = function(server){
             }
         });
     });
+    
+    //LOG IN
+    server.post('/api/account/login', function (req, res) {
 
+        //req.checkBody('email', 'Email is not valid').isEmail();
+        req.checkBody('password', 'Password is too short').notEmpty().isLength({min:5});
+
+        var errors = req.validationErrors();
+
+        if(errors) {
+            return res.status(400).send(errors);
+        }
+
+        var userData = req.body;
+
+        var Account = mongoose.model('Account');
+
+        Account.findOne({email:userData.email}, function (err, accountDoc) {
+
+            if(accountDoc){
+
+                bcrypt.compare(userData.password, accountDoc.password, function (err, result) {
+
+                    if(result){
+
+                        //success
+                        //tukaj smo ustvarili token, ki ga bomo dodali uporabniku
+                        var token = {
+                          token:guid.raw()
+                        };
+
+                        accountDoc.tokens.push(token);
+
+                        accountDoc.save(function (err) {
+
+                            if(!err){
+                                res.send(token);
+                            }else{
+                                res.sendStatus(401);
+                            }
+                        });
+
+                    }else {
+                        //wrong password
+                        res.sendStatus(401);
+                    }
+                });
+
+            }else{
+                res.sendStatus(401);
+            }
+
+        });
+
+    });
+
+    
+    
+    
+    
+    
     //READ ONE
     server.get('/api/account/:id', function (req, res) {
 

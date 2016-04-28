@@ -17,7 +17,7 @@ exports.seedAdmin = function () {
                 var Account = mongoose.model('Account');
 
                 //preden shranimo novega admina, preverimo, ce obstaja ze email: bisadmin
-                Account.findOne({ email:'adminEmail' }, function (err, doc) {
+                Account.findOne( { email:adminEmail }, function (err, doc) {
 
                     //ce dokument se ni narejen, sledece:
                     if(!doc){
