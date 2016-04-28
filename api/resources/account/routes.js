@@ -30,7 +30,7 @@ module.exports = function(server){
         var errors = req.validationErrors();
 
         if(errors) {
-            return res.status(400).send(errors);
+            return res.status(400).send(errors); 
         }
 
         var userData = req.body;

@@ -12,6 +12,11 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
         controller: 'LoginCtrl',
 
     });
+    $stateProvider.state('user-management', {
+        url: '/user-management',
+        templateUrl: 'partial/user-management/user-management.html',
+        controller: 'UserManagementCtrl'
+    });
     /* Add New States Above */
     $urlRouterProvider.otherwise('/login');
 
