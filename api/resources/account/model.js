@@ -7,7 +7,7 @@ var Schema =  new mongoose.Schema({
     email           : { type : String, unique : true },
     password        : String,
     dateCreated     : { type : Date, default : Date.now, required : true },
-    roles           : [String],                              //doctor, patient, admin
+    role            : String,                              //doctor, patient, admin, superdamin
     dateOfBirth     : Date,
     gender          : String,
     profileImage    : String,
