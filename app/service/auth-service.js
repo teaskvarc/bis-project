@@ -30,11 +30,11 @@ angular.module('app').factory('authService',function($http, NET) {
         },
 
         //preverimo kdo se zeli registrirati na podlagi povabila(invite)
-        checkInvite: function () {
+        checkInvite: function (code) {
 
             var promise = $http.get(NET.API_URL+'/api/invite/check/'+code);
 
-            promise.then(function (res) {
+            promise.then(function (res) {   //to se zgodi potem ko pride od streznika response
 
                 console.log(res);
 

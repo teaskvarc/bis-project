@@ -1,0 +1,24 @@
+<div class="row">
+
+    <div class="col-sm-4">
+        <label>Mesec</label>
+        <select type="text" ng-change="onChange()" ng-options="month as month for month in months" ng-model="date.month"class="form-control">
+
+        </select>
+    </div>
+
+    <div class="col-sm-4">
+        <label>Dan</label>
+        <select type="text" ng-change="onChange()" ng-options="day as day for day in days" ng-model="date.day" class="form-control">
+
+        </select>
+    </div>
+
+    <div class="col-sm-4">
+        <label>Leto</label>
+        <select type="text" ng-change="onChange()" ng-options="year as year for year in years" class="form-control" ng-model="date.year">
+
+        </select>
+    </div>
+
+</div>

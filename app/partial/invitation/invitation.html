@@ -9,6 +9,9 @@
     <label id="surname">Priimek</label>
     <input type="text" id="surname" class="form-control">
     <br/>
+    <label>Datum rojstva</label>
+    <birthdate-select ng-model="account.birthDate"></birthdate-select>   // datum rojstva smo povezali skozi ng-model s CTRL, ki smo ga ustvarili v directive!
+    <br/>
     <label for="kzz">Kartica zdravstvenega zavarovanja(stevilka)</label>
     <input id="kzz" type="text" class="form-control">
 
@@ -32,5 +35,8 @@
     <label> Moški
         <input type="radio" name="gender" value="male"
     </label>
+    <br/>
+
+    <div class="btn btn-block btn-success" ng-click="onSaveClick()">Create account</div>
 
 </div>
