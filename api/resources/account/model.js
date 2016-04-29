@@ -13,6 +13,7 @@ var Schema =  new mongoose.Schema({
     gender          : String,
     profileImage    : String,
     kzz             : String,
+    inviteCode      : String,  // tukaj bomo shranili kodo za invite
     tokens          : [
         {
             token : String,

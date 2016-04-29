@@ -1,23 +1,8 @@
 var mongoose        = require('mongoose');
 var bcrypt          = require('bcryptjs');
 var guid            = require ('guid');
-var nodemailer      = require('nodemailer');
-var smtpTransport   = require('nodemailer-smtp-transport');
 
 require('../../node_modules/mailin-api-node-js/V2.0/mailin.js');
-
-var client = new Mailin("https://api.sendinblue.com/v2.0","tqB7kdnpw2LRxZ5V");
-
-data = { "to" : {"teaskvarc@gmail.com":"to whom!"},
-    "from" : ["from@email.com","from email!"],
-    "subject" : "My subject",
-    "html" : "This is the <h1>HTML</h1>"
-}
-
-client.send_email(data).on('complete', function(data) {
-    console.log(data);
-});
-
 
 
 module.exports = function(server){
@@ -167,30 +152,63 @@ module.exports = function(server){
 
     });
 
-    //INVITE
+    //INVITE - ta funkcija se sprozi, ko zelimo nekoga povabiti
+
     server.post('/api/account/invite', function (req, res) {
 
+        //basic validation
         req.checkBody('email', 'Email is not valid').isEmail();
         req.checkBody('role', 'No role present').notEmpty();
 
+        var errors = req.validationErrors();
 
+        if(errors){
+            return res.status(400).send(errors);
+        }
 
-
-
-        var accountData = req.body;
         //na server-ju bomo dolocili, da je bil povabljen. v model.js smo dolocili, da je 0 = povabljen
-        accountData.status = 0;
-
         var Account = mongoose.model('Account');    //skozi ta Account delamo novi account na bazi
+
+        var inviteCode = guid.raw();
+
+        //accountData je tisto, kar pride iz nasega app-a. Iz browser-ja pride request body
+        var accountData = req.body;
+        var email = accountData.email;
+
+        accountData.status = 0;
+        accountData.inviteCode = inviteCode;
 
         var account = new Account(accountData);        // ustvarimo novi model
 
         account.save(function (err) {                      // shranimo v bazo
 
+            sendInvitation(email, inviteCode, function () {
+
+                res.send(account);
+
+            });
 
         });
+    });
+};
 
+function sendInvitation(email, id, cb) {
 
+    var client = new Mailin("https://api.sendinblue.com/v2.0","tqB7kdnpw2LRxZ5V");
+
+    var to = {};
+    to[email] = email;
+
+    data = { "to" : to,
+        "from" : ["invite@bis.com","BIS Invitation"],
+        "subject" : "Invite to BIS",
+        "html" : '<h1>BIS Invitation</h1>' +
+            '<a href="http://localhost:9001/#/invitation/'+id+'">Click here to accept invite!</a>'
+
+    };
+
+    client.send_email(data).on('complete', function(data) {
+        cb(data);
     });
 
-}
+};
