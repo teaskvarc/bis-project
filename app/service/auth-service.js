@@ -27,11 +27,22 @@ angular.module('app').factory('authService',function($http, NET) {
             });
 
             return promise;
+        },
+
+        //preverimo kdo se zeli registrirati na podlagi povabila(invite)
+        checkInvite: function () {
+
+            var promise = $http.get(NET.API_URL+'/api/invite/check/'+code);
+
+            promise.then(function (res) {
+
+                console.log(res);
+
+            });
+
+            return promise;
 
         }
-
-
-
     };
 
 	return authService;

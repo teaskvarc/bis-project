@@ -152,6 +152,23 @@ module.exports = function(server){
 
     });
 
+    //CHECK INVITE CODE
+    server.get('/api/invite/check/:code', function (req, res) {
+
+        var inviteCode = req.params.code;
+
+        var Account = mongoose.model('Account');
+
+        Account.findOne({ inviteCode:inviteCode}, function (err, accountDoc) {
+
+            if(!err){
+                res.send(accountDoc);
+            }else{
+              res.status(400).send(err);
+            }
+        });
+    });
+
     //INVITE - ta funkcija se sprozi, ko zelimo nekoga povabiti
 
     server.post('/api/account/invite', function (req, res) {

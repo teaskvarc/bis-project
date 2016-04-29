@@ -9,7 +9,7 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     $stateProvider.state('login', {
         url: '/login',
         templateUrl: 'partial/login/login.html',
-        controller: 'LoginCtrl',
+        controller: 'LoginCtrl'
 
     });
     $stateProvider.state('user-management', {
@@ -21,6 +21,11 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
         url: '/new-account',
         templateUrl: 'partial/new-account/new-account.html',
         controller: 'NewAccountCtrl'
+    });
+    $stateProvider.state('invitation', {
+        url: '/invitation/:code',
+        templateUrl: 'partial/invitation/invitation.html',
+        controller:'InvitationCtrl'
     });
     /* Add New States Above */
     $urlRouterProvider.otherwise('/login');

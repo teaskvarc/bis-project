@@ -1,0 +1,36 @@
+<div class="col-sm-4 col-sm-offset-4">
+
+    <h1>Welcome to BIS!</h1>
+    <p>Your email is: <b>{{account.email}}</b></p>
+
+    <label for="name">Ime</label>
+    <input type="text" id="name" class="form-control">
+    <br/>
+    <label id="surname">Priimek</label>
+    <input type="text" id="surname" class="form-control">
+    <br/>
+    <label for="kzz">Kartica zdravstvenega zavarovanja(stevilka)</label>
+    <input id="kzz" type="text" class="form-control">
+
+    <div ng-if="account.role === 'Doctor'">
+        <label for="doctor-id">Šifra zdravnika</label>
+        <input type="text" id="doctor-id" class="form-control">
+    </div>
+    <br/>
+    <label for="password">Geslo</label>
+    <input type="password" id="password" class="form-control">
+    <br/>
+    <label for="re-password">Ponovi geslo</label>
+    <input type="re-password" id="re-password" class="form-control">
+    <br/>
+    <label>SPOL</label>
+    <br/>
+    <label> Ženski
+        <input type="radio" name="gender" value="female">
+    </label>
+    <br/>
+    <label> Moški
+        <input type="radio" name="gender" value="male"
+    </label>
+
+</div>
