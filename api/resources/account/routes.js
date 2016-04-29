@@ -1,6 +1,23 @@
-var mongoose    = require('mongoose');
-var bcrypt      = require('bcryptjs');
-var guid        = require ('guid');
+var mongoose        = require('mongoose');
+var bcrypt          = require('bcryptjs');
+var guid            = require ('guid');
+var nodemailer      = require('nodemailer');
+var smtpTransport   = require('nodemailer-smtp-transport');
+
+require('../../node_modules/mailin-api-node-js/V2.0/mailin.js');
+
+var client = new Mailin("https://api.sendinblue.com/v2.0","tqB7kdnpw2LRxZ5V");
+
+data = { "to" : {"teaskvarc@gmail.com":"to whom!"},
+    "from" : ["from@email.com","from email!"],
+    "subject" : "My subject",
+    "html" : "This is the <h1>HTML</h1>"
+}
+
+client.send_email(data).on('complete', function(data) {
+    console.log(data);
+});
+
 
 
 module.exports = function(server){
@@ -104,6 +121,18 @@ module.exports = function(server){
         req.checkBody('email', 'Email is not valid').isEmail();
         req.checkBody('password', 'Password is too short').notEmpty().isLength({min:5});
 
+
+
+        // send mail with defined transport object
+        transporter.sendMail(mailOptions, function(error, info){
+            if(error){
+                return console.log(error);
+            }
+            console.log('Message sent: ' + info.response);
+        });
+
+
+
         //to smo sedaj pregledali, tukaj nam vrze vse errors
         var errors = req.validationErrors();
 
@@ -144,12 +173,9 @@ module.exports = function(server){
         req.checkBody('email', 'Email is not valid').isEmail();
         req.checkBody('role', 'No role present').notEmpty();
 
-        //no nam vrne ven, ce je odkril, da je problem pri enem od parametrov
-        var errors = req.validationErrors();
 
-        if(errors){
-            return res.status(400).send(errors);
-        }
+
+
 
         var accountData = req.body;
         //na server-ju bomo dolocili, da je bil povabljen. v model.js smo dolocili, da je 0 = povabljen

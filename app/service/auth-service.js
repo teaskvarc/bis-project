@@ -16,7 +16,22 @@ angular.module('app').factory('authService',function($http, NET) {
             });
 
             return promise;
+        },
+
+        invite:function (userData) {
+
+            var promise = $http.post(NET.API_URL+'/api/account/invite', userData);
+
+            promise.then(function (res) {
+
+            });
+
+            return promise;
+
         }
+
+
+
     };
 
 	return authService;
